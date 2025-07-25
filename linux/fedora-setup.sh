@@ -54,6 +54,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 # Lista de apps Flatpak para instalar
 declare -a flatpak_apps=(
+    "com.stremio.Stremio"
     "com.discordapp.Discord"
     "com.spotify.Client" 
     "com.mattjakeman.ExtensionManager"

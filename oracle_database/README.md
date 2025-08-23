@@ -46,6 +46,8 @@ docker compose down
     - Senha: oracle
 ![alt text](image.png)
 
+---
+
 - Usuário: hr, oe, sh
     - Host: localhost
     - Porta: 1521

@@ -48,11 +48,11 @@ docker compose down
 
 ---
 
-- Usuário: hr, oe, sh
+- Usuário: hr / oe / sh
     - Host: localhost
     - Porta: 1521
     - SID: XEPDB1
-    - Senha: hr, oe, sh
+    - Senha: hr / oe / sh
 
 ![alt text](image-1.png)
 

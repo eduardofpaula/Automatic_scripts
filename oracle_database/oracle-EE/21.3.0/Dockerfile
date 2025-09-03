@@ -22,6 +22,8 @@
 # ---------------
 FROM oraclelinux:7-slim AS base
 
+RUN yum -y install perl
+
 # Labels
 # ------
 LABEL "provider"="Oracle"                                               \
@@ -102,6 +104,7 @@ RUN chmod ug+x $INSTALL_DIR/*.sh && \
 
 FROM base AS builder
 
+ENV DB_EDITION=EE
 ARG DB_EDITION
 
 # Copy DB install file

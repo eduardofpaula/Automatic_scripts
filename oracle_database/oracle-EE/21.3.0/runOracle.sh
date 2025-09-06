@@ -268,9 +268,9 @@ else
 
   # Clean up incomplete database
   rm -rf "$ORACLE_BASE"/oradata/$ORACLE_SID
-  cp /etc/oratab oratab.bkp
-  sed "/^#/!d" oratab.bkp > /etc/oratab
-  rm -f oratab.bkp
+  cp /etc/oratab /tmp/oratab.bkp
+  sed "/^#/!d" /tmp/oratab.bkp > /etc/oratab
+  rm -f /tmp/oratab.bkp
   rm -rf "$ORACLE_BASE"/cfgtoollogs/dbca/$ORACLE_SID
   rm -rf "$ORACLE_BASE"/admin/$ORACLE_SID
 

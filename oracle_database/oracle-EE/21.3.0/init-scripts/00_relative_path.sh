@@ -15,6 +15,9 @@ fi
 
 echo "[INFO] Diretório de log OK."
 
+# Corrigir permissões do diretório de log para o usuário oracle
+chown 54321:54321 /opt/oracle/*
+
 echo "[INFO] Corrigindo paths dos sample schemas..."
 
 cd /opt/oracle/sample-schemas

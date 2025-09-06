@@ -152,3 +152,52 @@ GRANT READ, WRITE ON DIRECTORY LOG_FILE_DIR TO SH;
 GRANT READ, WRITE ON DIRECTORY DATA_FILE_DIR TO SH;
 
 COMMIT;
+
+-- 1. Verificar e habilitar recursos necessários
+-- 1.1 Verificar se Oracle Spatial está disponível (para OE schema)
+DECLARE
+  v_spatial_installed VARCHAR2(10);
+BEGIN
+  SELECT VALUE INTO v_spatial_installed FROM V$OPTION WHERE PARAMETER = 'Spatial';
+  IF v_spatial_installed = 'FALSE' THEN
+    DBMS_OUTPUT.PUT_LINE('[AVISO] Oracle Spatial não está disponível. OE schema pode não funcionar completamente.');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('[INFO] Oracle Spatial disponível.');
+  END IF;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('[AVISO] Não foi possível verificar Oracle Spatial.');
+END;
+/
+
+-- 1.2 Verificar se Partitioning está disponível (para SH schema)
+DECLARE
+  v_partitioning_installed VARCHAR2(10);
+BEGIN
+  SELECT VALUE INTO v_partitioning_installed FROM V$OPTION WHERE PARAMETER = 'Partitioning';
+  IF v_partitioning_installed = 'FALSE' THEN
+    DBMS_OUTPUT.PUT_LINE('[AVISO] Partitioning não está disponível. SH schema pode não funcionar.');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('[INFO] Partitioning disponível.');
+  END IF;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('[AVISO] Não foi possível verificar Partitioning.');
+END;
+/
+
+-- 1.3 Verificar se Java está habilitado (para PM schema)
+DECLARE
+  v_java_jvm_installed VARCHAR2(10);
+BEGIN
+  SELECT VALUE INTO v_java_jvm_installed FROM V$OPTION WHERE PARAMETER = 'Java';
+  IF v_java_jvm_installed = 'FALSE' THEN
+    DBMS_OUTPUT.PUT_LINE('[AVISO] Java JVM não está disponível. PM schema pode não funcionar.');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('[INFO] Java JVM disponível.');
+  END IF;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('[AVISO] Não foi possível verificar Java JVM.');
+END;
+/

@@ -10,20 +10,12 @@ echo "[INFO] Building Oracle 21c Docker image..."
 echo "[INFO] Criando diretórios para XML e logs..."
 mkdir -p /home/eduardo/oracle-dirs/oradata
 mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Jan
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Feb
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Mar
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Apr
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/May
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Jun
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Jul
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Aug
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Sep
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Oct
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Nov
-mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/Dec
+mkdir -p /home/eduardo/oracle-dirs/home/OE/PurchaseOrders/2002/{Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec}
+
+# Corrigir permissões ANTES de subir o container
 sudo chown -R 54321:54321 /home/eduardo/oracle-dirs
-sudo chown -R 54321:54321 /home/eduardo/oracle-dirs/oradata
+# Importante: corrigir permissões dos sample schemas também
+sudo chown -R 54321:54321 $(pwd)/21.3.0/db-sample-schemas-21.1
 
 # 2. Subindo o container Oracle
 docker run -d --name oracle21c \
@@ -42,12 +34,10 @@ docker run -d --name oracle21c \
   -e ENABLE_FORCE_LOGGING=true \
   -e ENABLE_TCPS=true \
   -v /home/eduardo/oracle-dirs/oradata:/opt/oracle/oradata \
-  -v $(pwd)/21.3.0/init-scripts:/docker-entrypoint-initdb.d/startup \
+  -v $(pwd)/21.3.0/init-scripts:/opt/oracle/scripts/startup \
   -v $(pwd)/21.3.0/db-sample-schemas-21.1:/opt/oracle/sample-schemas \
   -v /home/eduardo/oracle-dirs/home:/home \
   meu-oracle:21c-ee
 
-############################
-# ATÉ AQUI FUNCIONA BEM
-############################
-
+echo "[INFO] Container Oracle iniciado. Aguardando inicialização completa..."
+echo "[INFO] Você pode acompanhar os logs com: docker logs -f oracle21c"

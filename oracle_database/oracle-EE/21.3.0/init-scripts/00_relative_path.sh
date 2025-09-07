@@ -6,15 +6,6 @@ echo "[INFO] Preparando paths dos sample schemas..."
 echo "[INFO] Owner atual:"
 ls -ld /opt/oracle/sample-schemas || true
 
-echo "[INFO] Tentando criar diretório de log..."
-if ! mkdir -p /opt/oracle/sample-schemas/log 2>/dev/null; then
-  echo "[ERRO] Sem permissão para criar /opt/oracle/sample-schemas/log"
-  echo "[DICA] Execute no host: sudo chown -R 54321:54321 21.3.0/db-sample-schemas-21.1"
-  exit 0
-fi
-
-echo "[INFO] Diretório de log OK."
-
 # Corrigir permissões do diretório de log para o usuário oracle
 chown 54321:54321 /opt/oracle/*
 

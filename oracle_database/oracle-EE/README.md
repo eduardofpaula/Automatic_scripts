@@ -19,7 +19,7 @@ Este guia mostra como instalar o Oracle Database 21c Enterprise Edition em Docke
 
 Baixe o arquivo `LINUX.X64_213000_db_home.zip` do site da Oracle e coloque-o na pasta:
 
-```
+```shell
 /home/SEU_USUARIO/Documents/Repos/Automatic_scripts/oracle_database/oracle-EE/21.3.0/
 ```
 
@@ -31,12 +31,19 @@ cd ~/Documents/Repos/Automatic_scripts/oracle_database/oracle-EE
 
 ---
 
-## 3. Defina a senha como variável de ambiente
+## 3. Defina a senha como variável de ambiente e Arquivo de instalação
 
-Escolha uma senha forte para o banco e exporte como variável de ambiente:
+- Escolha uma senha forte para o banco e exporte como variável de ambiente:
 
 ```bash
 export ORACLE_PWD=MinhaSenhaForte123
+```
+
+- No arquivo `01_install_schemas.sql`, ajuste a senha dos usuários SYS e SYSTEM para a senha escolhida:
+
+```sql
+DEFINE SYSTEM_password = SuaSenhaAqui -- Altere "SuaSenhaAqui" para a mesma senha do SYS passada no container
+DEFINE SYS_password    = SuaSenhaAqui -- Altere "SuaSenhaAqui" para a mesma senha do SYSTEM passada no container
 ```
 
 ---
@@ -50,28 +57,17 @@ sudo -E ./01_setup_oracle19c.sh
 ```
 
 Esse script irá:
+
 - Buildar a imagem Docker do Oracle 21c EE
 - Criar os diretórios necessários no seu `$HOME`
 - Ajustar permissões para o usuário do Oracle no container
 - Inicializar o container com os volumes e variáveis corretas
+- Instalar os sample-schemas automaticamente via script SQL
+- Deixar o banco pronto para uso através da porta 1521
 
 ---
 
-## 5. Instale os Sample Schemas
-
-Após o banco estar rodando, execute o script de instalação dos schemas:
-
-1. Edite o arquivo `21.3.0/init-scripts/01_install_schemas.sql` e altere a senha para o valor que você exportou em `ORACLE_PWD` (exemplo: `MinhaSenhaForte123`).
-
-2. Execute o script dentro do container Oracle (pode ser via DBeaver, SQL*Plus, ou outro cliente):
-
-```bash
-sqlplus system/$ORACLE_PWD@localhost:1521/ORCLPDB1 @/opt/oracle/scripts/startup/01_install_schemas.sql
-```
-
----
-
-## 6. Verifique a instalação
+## 5. Verifique a instalação
 
 - Para acompanhar os logs do container:
 
@@ -79,11 +75,22 @@ sqlplus system/$ORACLE_PWD@localhost:1521/ORCLPDB1 @/opt/oracle/scripts/startup/
 docker logs -f oracle21c
 ```
 
-- Para acessar o banco via SQL*Plus:
+---
 
-```bash
-sqlplus sys/$ORACLE_PWD@localhost:1521/ORCLCDB as sysdba
-```
+## 6. Acessando o banco através do Dbeaver ou SQL Developer
+
+- Use as seguintes credenciais:
+- Host: `localhost`
+  - Porta: `1521`
+  - SID/Service Name: `ORCLPDB1`
+  - Usuário: `SYSTEM` (ou `SYS` com role SYSDBA)
+  - Senha SYS/SYSTEM: a senha que você definiu anteriormente na variável `ORACLE_PWD`
+- Usuários dos sample-schemas:
+  - HR: `hr` / senha `hr`
+  - OE: `oe` / senha `oe`
+  - PM: `pm` / senha `pm`
+  - BI: `bi` / senha `bi`
+  - SH: `sh` / senha `sh`
 
 ---
 

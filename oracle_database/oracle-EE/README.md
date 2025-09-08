@@ -53,7 +53,7 @@ DEFINE SYS_password    = SuaSenhaAqui -- Altere "SuaSenhaAqui" para a mesma senh
 Use `sudo -E` para garantir que a variável de ambiente será passada para o script:
 
 ```bash
-sudo -E ./01_setup_oracle19c.sh
+sudo -E ./01_setup_oracle21c.sh
 ```
 
 Esse script irá:

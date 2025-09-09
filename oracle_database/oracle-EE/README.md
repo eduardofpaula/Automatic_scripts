@@ -6,11 +6,10 @@ Este guia mostra como instalar o Oracle Database 21c Enterprise Edition em Docke
 
 ## 1. Pré-requisitos
 
-- **Docker** instalado e rodando ([instalação oficial](https://docs.docker.com/engine/install/))
+- **Docker** instalado e rodando [Instalação Oficial](https://docs.docker.com/engine/install/)
 - **Permissão sudo** para criar diretórios e ajustar permissões
-- **Arquivo ZIP do Oracle Database 21c** (LINUX.X64_213000_db_home.zip) baixado do [site oficial Oracle](https://www.oracle.com/database/technologies/oracle21c-linux-downloads.html)
+- **Arquivo ZIP do Oracle Database 21c** Baixe a versão correta baixado do Site Oficial [Download LINUX](https://www.oracle.com/database/technologies/oracle21c-linux-downloads.html) [Download WINDOWS](https://www.oracle.com/database/technologies/oracle21c-windows-downloads.html)
 - Scripts e schemas já presentes na pasta `21.3.0/db-sample-schemas-21.1` (como no seu repositório)
-
 ---
 
 ## 2. Preparação do ambiente

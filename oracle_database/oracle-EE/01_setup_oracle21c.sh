@@ -45,10 +45,10 @@ echo "[INFO] Inicializando container Oracle..."
 
 docker run -d --name oracle21c \
   -p 1521:1521 -p 5500:5500 -p 2484:2484 \
-  --ulimit nofile=1024:65536 --ulimit nproc=2047:16384 --ulimit stack=10485760:33554432 --ulimit memlock=3221225472 \
+  --ulimit nofile=65536:65536 --ulimit nproc=16384:16384 --ulimit stack=33554432:33554432 --ulimit memlock=-1 \
   -e ORACLE_SID=ORCLCDB \
   -e ORACLE_PDB=ORCLPDB1 \
-  -e ORACLE_PWD="$ORACLE_PWD" \
+  -e ORACLE_PWD=MinhaSenhaForte123 \
   -e INIT_SGA_SIZE=4096 \
   -e INIT_PGA_SIZE=1024 \
   -e INIT_CPU_COUNT=4 \
